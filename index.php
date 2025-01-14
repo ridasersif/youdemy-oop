@@ -1,21 +1,7 @@
 <!DOCTYPE html>
 
 <html>
-	<head>
-		<!--  *****   Link To Custom CSS Style Sheet   *****  -->
-		<link rel="stylesheet" type="text/css" href="public/Css/style.css?v=1.23">
-
-		<!--  *****   Link To Font Awsome Icons   *****  -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
-
-		<!--  *****   Link To Owl Carousel   *****  -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
-
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<title>Bright Future</title>
-	</head>
+	<?php include 'public/include/header.php' ?>
 	<body>
 		<!--   *** Website Container Starts ***   -->
 		<div class="website-container">
@@ -23,61 +9,36 @@
 			<!--   *** Home Section Starts ***   -->
 			<section class="home" id="home">
 				<!--   === Main Navbar Starts ===   -->
-				<nav class="main-navbar">
-					<a href="#logo" class="logo">
-						<img alt="" src="public/images/logo.png">
-					</a>
-					<ul class="nav-list">
-						<li><a href="#home">Home</a></li>
-						<li><a href="#services">Services</a></li>
-						<li><a href="#courses">Courses</a></li>
-						<li><a href="#categories">Categories</a></li>
-						<li><a href="#testimonials">Testimonials</a></li>
-					</ul>
-					<div>
-
-						 <a href="app/Views/auth/register.php" class="">
-							<button class="get-started-btn btn">Sign Up</button>
-						</a> 
-
-						<a href="app/Views/auth/login.php" class="">
-							<button class="get-started-btn btn">Sign In</button>
-						</a>
-
-					</div>
-					<div class="menu-btn">
-						<span></span>
-					</div>
-				</nav>
+				<?php include 'public/include/navbar.php' ?>
 				<!--   === Main Navbar Ends ===   -->
 				<!--   === Banner Starts ===   -->
-				<?php include 'banner.php' ?>
+				<?php include 'public/include/banner.php' ?>
 				<!--   === Banner Ends ===   -->
 			</section>
 			<!--   *** Home Section Ends ***   -->
 
 			<!--   *** Partners Section Starts ***   -->
-			<?php include 'partners.php' ?>
+			<?php include 'public/include/partners.php' ?>
 			<!--   *** Partners Section Ends ***   -->
 
 			<!--   *** Services Section Starts ***   -->
-			<?php include 'services.php' ?>
+			<?php include 'public/include/services.php' ?>
 			<!--   *** Services Section Ends ***   -->
 
 			<!--   *** Courses Section Starts ***   -->
-			<?php include 'courses.php'  ?>
+			<?php include 'public/include/courses.php'  ?>
 			<!--   *** Courses Section Ends ***   -->
 
 			<!--   *** Courses Categories Section Starts ***   -->
-			<?php include 'categories.php' ?>
+			<?php include 'public/include/categories.php' ?>
 			<!--   *** Courses Categories Section Ends ***   -->
 
 			<!--   *** Teacher Section Starts ***   -->
-			<?php include 'instructor.php' ?>
+			<?php include 'public/include/instructor.php' ?>
 			<!--   *** Teacher Section Ends ***   -->
 
 			<!--   *** Testimonials Section Starts ***   -->
-			<?php include 'testimonials.php' ?>
+			<?php include 'public/include/testimonials.php' ?>
 			<!--   *** Testimonials Section Ends ***   -->
 			<!--   *** Footer Section Starts ***   -->
 			   <?php  include 'footer.php'   ?>

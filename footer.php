@@ -82,6 +82,6 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
 		<!--   *** Link To Curstom Script File ***   -->
-		<script type="text/javascript" src="public/Js/main.js"></script>
+		<script type="text/javascript" src="public/Js/main.js?v=1.1"></script>
 	</body>
 </html>
