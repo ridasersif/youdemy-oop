@@ -30,6 +30,13 @@ function pageScrollFunction(){
 		homeSection.classList.remove('active');
 	}
 }
+
+// Toggle the profile popup
+function toggleProfilePopup() {
+    var popup = document.getElementById("profile-popup");
+    popup.classList.toggle("show");
+}
+
 // Home Section Ends
 
 // Partners Section Starts 
@@ -76,4 +83,5 @@ $('.testimonials-slider').owlCarousel({
         }
     }
 })
+
 // Testimonials Section Ends

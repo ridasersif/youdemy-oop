@@ -27,6 +27,7 @@
 
 			<!--   *** Courses Section Starts ***   -->
 			<?php include 'public/include/courses.php'  ?>
+		
 			<!--   *** Courses Section Ends ***   -->
 
 			<!--   *** Courses Categories Section Starts ***   -->
@@ -41,7 +42,7 @@
 			<?php include 'public/include/testimonials.php' ?>
 			<!--   *** Testimonials Section Ends ***   -->
 			<!--   *** Footer Section Starts ***   -->
-			   <?php  include 'footer.php'   ?>
+			   <?php  include 'public/include/footer.php'   ?>
 			<!--   *** Footer Section Ends ***   -->
-
+        </div>
 			

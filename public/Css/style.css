@@ -63,6 +63,105 @@ button.btn:hover{
 	margin-bottom: 40px;
 	max-width: 700px;
 }
+.profile-icon{
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	border: none;
+	border: solid 2px rgb(207, 205, 208) ;
+}
+
+
+
+
+    /* CSS for the navbar */
+    .main-navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #333;
+        padding: 10px;
+    }
+
+    .nav-list {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+    }
+
+    .nav-list li a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .menu-btn span {
+        background-color: white;
+        width: 30px;
+        height: 3px;
+        display: block;
+        margin: 5px 0;
+    }
+
+    /* CSS for profile popup */
+    .profile-icon {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    .profile-popup {
+        display: none;
+        position: absolute;
+        right: 10px;
+        top: 50px;
+        background-color: #fff;
+        padding: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 200px;
+        border-radius: 8px;
+        font-size: 14px;
+    }
+
+    .profile-popup p {
+        margin: 5px 0;
+    }
+
+    .profile-popup a {
+        display: block;
+        margin-top: 10px;
+        padding: 8px;
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        border-radius: 4px;
+        text-decoration: none;
+    }
+
+    .profile-popup a.logout-btn {
+        background-color: #f44336;
+    }
+
+    /* CSS for close button (X) */
+    .close-btn {
+        background: none;
+        border: none;
+        color: #333;
+        font-size: 20px;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        cursor: pointer;
+    }
+
+    .profile-popup.show {
+        display: block;
+    }
+
+
+
 /*   === Global Styling Ends ===   */
 body{
 	width: 100%;
@@ -984,3 +1083,6 @@ section.footer{
 	}
 }
 /*   === Media Query Ends ===   */
+
+
+

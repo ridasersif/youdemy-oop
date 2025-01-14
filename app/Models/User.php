@@ -22,12 +22,19 @@ class User {
         $conn = $this->db->connect();
         $motDePasseHash = password_hash($motDePasse, PASSWORD_BCRYPT);
 
-        $query = "INSERT INTO Utilisateur (nom, email, motDePasse, role_id) VALUES (:nom, :email, :motDePasse, :role)";
+        if($role==3){
+            $estActif = true;
+        }else{
+            $estActif = false; 
+        }
+
+        $query = "INSERT INTO Utilisateur (nom, email, motDePasse, role_id, estActif) VALUES (:nom, :email, :motDePasse, :role, :estActif)";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':nom', $nom);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':motDePasse', $motDePasseHash);
         $stmt->bindParam(':role', $role);
+        $stmt->bindParam(':estActif', $estActif);
 
         return $stmt->execute(); 
     }

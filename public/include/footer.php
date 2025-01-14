@@ -48,6 +48,16 @@
 							<a href="#courses">Courses</a>
 							<a href="#categories">Categories</a>
 							<a href="#testimonials">Testimonials</a>
+							<?php if (isset($_SESSION['user_id'])): ?>
+            <?php
+            if ($_SESSION['user_role'] == 1 || $_SESSION['user_role'] == 2) {
+                echo '<a href="';
+                echo ($_SESSION['user_role'] == 1) ? 'app/Views/admin/dashboard.php' : 'app/Views/teacher/dashboard.php';
+                echo '">Dashboard</a>';
+            }
+            ?>
+        <?php endif; ?>
+
 						</div>
 					</div>
 

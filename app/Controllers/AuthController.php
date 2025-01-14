@@ -20,14 +20,15 @@ class AuthController {
 
            
             $userModel = new User();
-            if ($userModel->checkEmailExists($email)) {
+;
+            if (            $userModel->checkEmailExists($email)){
                 $_SESSION['error_message'] = "Cet email est déjà utilisé.";
                 header('Location: ../Views/auth/register.php'); 
                 exit();
             }
-            if ($userModel->createUser($nom, $email, $motDePasse, $role)) {
-                echo "Inscription réussie.";
-                header('Location: ../../public/index.php');
+             $user=$userModel->createUser($nom, $email, $motDePasse, $role);
+            if ($user) {
+                header('Location: ../Views/auth/login.php');
                 exit();
             } else {
                 die("Erreur lors de l'inscription.");
@@ -48,11 +49,13 @@ class AuthController {
             $userModel = new User();
             $user = $userModel->login($email, $motDePasse);
             if($user){
+
+
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_nom'] = $user['nom'];
                 $_SESSION['user_email'] = $user['email'];
                 $_SESSION['user_role'] = $user['role_id'];
-                // header( 'Location: ../../public/include/navbar.php');
+                $_SESSION['user_estActif'] = $user['estActif'];
                 header('Location: ../../index.php');
                 exit();
             }else{
@@ -63,13 +66,25 @@ class AuthController {
 
         }
     }
-
+    public function logout() {
+        session_unset();
+        session_destroy();
+        header('Location: ../Views/auth/login.php');
+        exit();
+      
+    }
+ 
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $authController = new AuthController();
     $authController->register();
     $authController->login();
+
+}
+if(isset($_GET['logou'])){
+    $authController = new AuthController();
+    $authController->logout();
 }
 ?>
 
