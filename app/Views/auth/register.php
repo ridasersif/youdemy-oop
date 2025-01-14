@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -10,29 +11,36 @@
 <body class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 min-h-screen flex items-center justify-center p-4">
     <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 space-y-6">
    
-        <div class="flex justify-start p-4">
+        <div class="flex justify-start ">
             <a href="../../../index.php" 
             class="text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-full text-lg font-bold border border-red-500 hover:border-red-600 transition-all duration-300 flex items-center justify-center">
                 <i class="fas fa-arrow-left"></i> 
             </a>
+           
         </div>
 
         <div class="text-center">
             <h2 class="text-2xl font-bold text-gray-900">Créer un compte</h2>
             <p class="mt-2 text-sm text-gray-600">Remplissez le formulaire ci-dessous</p>
         </div>
+                <?php if (isset($_SESSION['error_message'])): ?>
+                <div style="color: red; font-weight: bold;">
+                    <?= $_SESSION['error_message']; ?>
+                </div>
+                <?php unset($_SESSION['error_message']); ?>
+                <?php endif; ?>
 
         <form class="space-y-4" method="POST" action="../../Controllers/AuthController.php" onsubmit="return validateForm()">
             <!-- Nom -->
             <div>
-                <label for="FullName" class="block text-sm font-medium text-gray-700">Nom</label>
+                <label for="nom" class="block text-sm font-medium text-gray-700">Nom</label>
                 <input 
                     type="text" 
-                    id="FullName" 
+                    id="nom" 
                     name="nom" 
                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Entrez votre nom"
-                    required
+                    
                 >
             </div>
 
@@ -47,7 +55,7 @@
                     name="email" 
                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="sersif@exemple.com"
-                    required
+                  
                 >
             </div>
            <!-- Rôle -->
@@ -75,8 +83,6 @@
                         name="motDePasse" 
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="••••••••"
-                        required
-                        minlength="8"
                     >
                     <button 
                         type="button" 
@@ -100,7 +106,7 @@
                         name="passwordConfirm" 
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="••••••••"
-                        required
+                    
                     >
                     <button 
                         type="button" 
@@ -113,35 +119,43 @@
             </div>
 
             <!-- Bouton de soumission -->
-            <button  name="submit" type="submit"  class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" >
+            <button  name="creerCompt" type="submit"  class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" >
                 S'inscrire
             </button>
         </form>
+        <div class="text-center text-sm">
+            <p class="text-gray-600">
+            Vous avez déjà un compte ? 
+                <a href="login.php" class="font-medium text-blue-600 hover:text-blue-500">
+                    S'inscrire
+                </a>
+            </p>
+        </div>
     </div>
-
-    <script>
+   
+ <script>
     // Toggle password visibility
-    document.getElementById('togglePassword').addEventListener('click', function () {
-        const passwordField = document.getElementById('password');
-        passwordField.type = passwordField.type === 'password' ? 'text' : 'password';
-        this.querySelector('i').classList.toggle('fa-eye-slash');
-    });
+document.getElementById('togglePassword').addEventListener('click', function () {
+    const passwordField = document.getElementById('password');
+    passwordField.type = passwordField.type === 'password' ? 'text' : 'password';
+    this.querySelector('i').classList.toggle('fa-eye-slash');
+});
 
-    document.getElementById('togglePasswordConfirm').addEventListener('click', function () {
-        const confirmPasswordField = document.getElementById('passwordConfirm');
-        confirmPasswordField.type = confirmPasswordField.type === 'password' ? 'text' : 'password';
-        this.querySelector('i').classList.toggle('fa-eye-slash');
-    });
+document.getElementById('togglePasswordConfirm').addEventListener('click', function () {
+    const confirmPasswordField = document.getElementById('passwordConfirm');
+    confirmPasswordField.type = confirmPasswordField.type === 'password' ? 'text' : 'password';
+    this.querySelector('i').classList.toggle('fa-eye-slash');
+});
 
-    function validateForm() {
-    const nameField = document.getElementById('FullName');
+function validateForm() {
+    const nameField = document.getElementById('nom');  // Changed from 'FullName' to 'nom'
     const emailField = document.getElementById('email');
     const passwordField = document.getElementById('password');
     const confirmPasswordField = document.getElementById('passwordConfirm');
 
     let isValid = true;
 
-    // Reset previous error styles
+    // Reset previous error messages
     resetError(nameField);
     resetError(emailField);
     resetError(passwordField);
@@ -174,19 +188,29 @@
 // Function to show error
 function showError(field, message) {
     field.style.borderColor = 'red'; // Add red border
-    field.classList.add('error'); // Add error class for real-time validation
-    alert(message); // Show alert message
+    let errorElement = field.nextElementSibling; // Find the error message span
+    if (!errorElement || errorElement.className !== 'error-message') {
+        errorElement = document.createElement('span');
+        errorElement.className = 'error-message';
+        errorElement.style.color = 'red';
+        errorElement.style.fontSize = '12px';
+        errorElement.textContent = message;
+        field.parentNode.insertBefore(errorElement, field.nextSibling);
+    }
 }
 
 // Function to reset error styles
 function resetError(field) {
     field.style.borderColor = ''; // Reset border color
-    field.classList.remove('error'); // Remove error class
+    const errorElement = field.nextElementSibling; // Find the error message span
+    if (errorElement && errorElement.className === 'error-message') {
+        errorElement.remove(); // Remove the error message
+    }
 }
 
 // Real-time validation function
 function setupRealTimeValidation() {
-    const nameField = document.getElementById('FullName');
+    const nameField = document.getElementById('nom');  // Changed from 'FullName' to 'nom'
     const emailField = document.getElementById('email');
     const passwordField = document.getElementById('password');
     const confirmPasswordField = document.getElementById('passwordConfirm');
@@ -223,6 +247,8 @@ function setupRealTimeValidation() {
 
 // Call the real-time validation setup function when the page loads
 window.onload = setupRealTimeValidation;
-    </script>
+
+ </script>
+
 </body>
 </html>

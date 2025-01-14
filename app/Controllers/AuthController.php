@@ -1,15 +1,13 @@
 <?php
-
+session_start();
 
 require_once '../../config/database.php';
-require_once '../Models/User.php';  
-
-
+require_once '../Models/User.php'; 
 
 class AuthController {
 
     public function register() {
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['creerCompt'])) {
         
             $nom = $_POST['nom'];
             $email = $_POST['email'];
@@ -23,25 +21,56 @@ class AuthController {
            
             $userModel = new User();
             if ($userModel->checkEmailExists($email)) {
-                die("Cet email est déjà utilisé.");
+                $_SESSION['error_message'] = "Cet email est déjà utilisé.";
+                header('Location: ../Views/auth/register.php'); 
+                exit();
             }
-
-          
             if ($userModel->createUser($nom, $email, $motDePasse, $role)) {
                 echo "Inscription réussie.";
-                header('Location:../../public/index.php');
+                header('Location: ../../public/index.php');
                 exit();
             } else {
                 die("Erreur lors de l'inscription.");
             }
         }
     }
-}
+    public function login(){
+        if(isset($_POST['login'])){
+            $email = $_POST['email'];
+            $motDePasse = $_POST['motDePasse'];
 
+            if(empty($email) || empty($motDePasse)){
+                $_SESSION['error_message'] = "Tous les champs sont obligatoires.";
+                header('location: ../Views/auth/login.php');
+                exit();
+            }
+
+            $userModel = new User();
+            $user = $userModel->login($email, $motDePasse);
+            if($user){
+                $_SESSION['user']=[
+                    'id' => $user['id'],
+                    'nom' => $user['nom'],
+                    'email' => $user['email'],
+                    'role_id' => $user['role_id']
+                ];
+                header('Location: ../../public/index.php');
+                exit();
+            }else{
+               $_SESSION['error_message'] = "Email ou mot de passe incorrect.";
+               header('Location: ../Views/auth/login.php');
+               exit();
+            }
+
+        }
+    }
+
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $authController = new AuthController();
     $authController->register();
+    $authController->login();
 }
 ?>
 
