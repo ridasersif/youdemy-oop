@@ -20,7 +20,6 @@ class AuthController {
 
            
             $userModel = new User();
-;
             if (            $userModel->checkEmailExists($email)){
                 $_SESSION['error_message'] = "Cet email est déjà utilisé.";
                 header('Location: ../Views/auth/register.php'); 

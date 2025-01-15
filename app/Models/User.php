@@ -1,9 +1,15 @@
 <?php
 
-require_once '../../config/database.php';
+require_once realpath(__DIR__ . '/../../') . '\config\Database.php';
 
 class User {
-    private $db;
+    protected $id;
+    protected $nom;
+    protected $email;
+    protected $motDePasse;
+    protected $role;
+    protected $estActif;
+    protected $db;
 
     public function __construct() {
         $this->db = new Database();
