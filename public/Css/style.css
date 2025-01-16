@@ -19,6 +19,7 @@ html{
 }
 /*   === Global Styling Starts ===   */
 button.btn{
+	
 	padding: 10px 18px;
 	background-color: var(--primary-clr);
 	color: var(--light-heading-clr);
@@ -336,6 +337,7 @@ section.home{
 	border: 2px solid #c1dbcc;
 	border-radius: 5px;
 	outline-color: var(--primary-clr);
+	
 }
 .banner-desc .search-bar i{
 	position: absolute;

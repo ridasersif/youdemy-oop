@@ -1,0 +1,44 @@
+<?php
+require_once realpath(__DIR__ . '/../../') . '\config\Database.php';
+
+require_once __DIR__ . '/Tags.php';
+
+class ManagerTags{
+    public function insertTags(Tags $Tags){
+        $db = new Database();
+        $conn = $db->connect();
+        $stmt = $conn->prepare("INSERT INTO Tag (nom)
+        VALUES (:nom) ");
+
+        $stmt->execute([
+            ':nom'=>$Tags->getNom(),
+        ]);
+    }
+    public function getAllTags() {
+        $db = new Database();
+        $conn = $db->connect();
+        $stmt = $conn->prepare("SELECT * FROM Tag WHERE deleted_at IS NULL");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function updateTags(Tags $Tags)
+    {
+        $db = new Database();
+        $conn = $db->connect();
+        $stmt = $conn->prepare("UPDATE Tag SET nom = :nom WHERE id = :id");
+        $stmt->execute([
+            ':id' => $Tags->getId(),
+            ':nom' => $Tags->getNom(),
+        ]);
+    }
+    public function delete($id){
+        $db = new Database();
+        $conn = $db->connect();
+        $stmt= $conn->prepare("UPDATE Tag SET deleted_at = NOW() WHERE id = :id");
+        $stmt->execute([
+            ':id'=>$id
+        ]);
+    }
+}
+
+?>

@@ -6,6 +6,36 @@ if ($_SESSION['user_role'] != 1){
 require_once '../../../config/Database.php';
 require_once '../../Models/Administrateur.php';
 $admin = new Administrateur();
+$users = $admin->getAllUsers();
+
+
+
+
+require_once '../../Controllers/CategorieController.php';
+
+$categorieController = new CategorieController();
+
+$categories = $categorieController->getAllCategories();
+
+    if (isset($_POST['add'])) {
+       
+        $categorieController->addCategorie($_POST['nom'], $_POST['desc'], $_POST['logo']);
+        header("Location: " . $_SERVER['PHP_SELF']); 
+        exit;
+    }
+
+    if (isset($_POST['delete'])) {
+        $categorieController->deleteCategorie($_POST['id']);
+        header("Location: " . $_SERVER['PHP_SELF']); 
+        exit;
+    }
+
+    if (isset($_POST['update'])) {
+        $categorieController->updateCategorie($_POST['id'], $_POST['nom'], $_POST['desc'], $_POST['logo']);
+        header("Location: " . $_SERVER['PHP_SELF']); 
+        exit;
+    }
+
 
 ?>
 
@@ -48,55 +78,17 @@ $admin = new Administrateur();
             </div>
            
 
-            <!-- ======================= Cards ================== -->
-            <div class="cardBox">
-                <div class="card">
-                    <div>
-                        <div class="numbers">1,504</div>
-                        <div class="cardName">Daily Views</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div>
-                        <div class="numbers">80</div>
-                        <div class="cardName">Sales</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="cart-outline"></ion-icon>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div>
-                        <div class="numbers">284</div>
-                        <div class="cardName">Comments</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="chatbubbles-outline"></ion-icon>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div>
-                        <div class="numbers">$7,842</div>
-                        <div class="cardName">Earning</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="cash-outline"></ion-icon>
-                    </div>
-                </div>
-            </div>
+          
            
             <!-- ================ Order Details List ================= -->
           
+            <?php 
+           
+            include "./include/tableEtudiants.php";
+
+            ?>
+
+
 
 <!-- CSS to style the buttons -->
 
