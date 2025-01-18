@@ -13,7 +13,7 @@
 </div>
 <div style="display: flex; flex-wrap: wrap; margin-top: 20px; justify-content: center; ">
     <?php foreach ($categories as $category): ?>
-        <div class="recentOrders" style="margin: 10px; border: 1px solid #ccc; padding: 15px; width: 200px;">
+        <div class="recentOrders" style="margin: 10px; border: 1px solid #ccc; padding: 15px; width: 95%; background:#edfaf1">
             <div>
                 <div class="category-icon">
                     <i class="fa-brands fa-facebook"></i>

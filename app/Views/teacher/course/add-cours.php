@@ -1,9 +1,22 @@
+<?php
+
+require_once '../../../Controllers/TagsController.php';
+require_once '../../../Controllers/CategorieController.php';
+$TagsController = new TagsController();
+$tags = $TagsController->getAllTags();
+
+$CategorieController = new CategorieController();
+$categories = $CategorieController->getAllCategories();
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Créer un Cours</title>
+
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -54,16 +67,34 @@
         button:hover {
             background-color: #0056b3;
         }
+        .tag-container {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .tag {
+            display: flex;
+            align-items: center;
+            background-color: #007bff;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+        .tag span {
+            margin-left: 10px;
+            cursor: pointer;
+            background-color: #ff5e57;
+            border-radius: 50%;
+            padding: 0 5px;
+        }
         .hidden {
             display: none;
         }
-        option[selected] {
-            background-color: #007bff;
-            color: white;
-        }
     </style>
+
     <script>
-        // Fonction pour gérer l'affichage de l'input URL
         function handleTypeChange() {
             const type = document.getElementById('type').value;
             const urlGroup = document.getElementById('url-group');
@@ -83,10 +114,53 @@
                 urlInput.value = "";
             }
         }
+
+     function handleTagSelection(event) {
+        const tagsContainer = document.getElementById('selected-tags');
+        const selectedTagsInput = document.getElementById('selected-tags-input');
+        const selectedTagId = event.target.value;
+        const selectedTagText = event.target.options[event.target.selectedIndex].text;
+
+       
+        if (document.getElementById(`tag-${selectedTagId}`)) return;
+
+       
+        const tag = document.createElement('div');
+        tag.className = 'tag';
+        tag.id = `tag-${selectedTagId}`;
+        tag.innerHTML = `${selectedTagText} <span onclick="removeTag('${selectedTagId}')">X</span>`;
+
+        
+        tagsContainer.appendChild(tag);
+
+       
+        let selectedTags = selectedTagsInput.value ? selectedTagsInput.value.split(',') : []; 
+        selectedTags.push(selectedTagId); 
+        selectedTagsInput.value = selectedTags.join(','); 
+        }
+
+   
+        function removeTag(tagId) {
+        const tagElement = document.getElementById(`tag-${tagId}`);
+        if (tagElement) {
+            tagElement.remove();
+        }
+
+       
+        const selectedTagsInput = document.getElementById('selected-tags-input');
+        let selectedTags = selectedTagsInput.value ? selectedTagsInput.value.split(',') : [];
+        selectedTags = selectedTags.filter(id => id !== tagId); 
+        selectedTagsInput.value = selectedTags.join(',');
+        }
+
+
+
     </script>
+
+
 </head>
 <body>
-    <form action="/path/to/server-side-script.php" method="POST">
+    <form action="../../../Controllers/CoursController.php" method="POST">
         <h2>Créer un Cours</h2>
 
         <div class="form-group">
@@ -103,12 +177,19 @@
             <label for="categorie">Catégorie</label>
             <select id="categorie" name="categorie_id" required>
                 <option value="" disabled selected>Choisissez une catégorie</option>
-                <option value="1">Mathématiques</option>
-                <option value="2">Informatique</option>
-                <option value="3">Physique</option>
+                <?php foreach ($categories as $category): ?>
+                <option value="<?= $category['id']; ?>"><?= $category['nom']; ?></option>
+                <?php endforeach; ?>
             </select>
         </div>
-
+        <div class="form-group">
+            <label for="titre">image de l'nterface</label>
+            <input type="text" id="image" name="image" placeholder="Entrez image de l'nterface" required>
+        </div>
+        <div class="form-group">
+            <label for="price">Prix</label>
+            <input type="number" id="price" name="price" placeholder="Entrez le prix" required>
+        </div>
         <div class="form-group">
             <label for="type">Type</label>
             <select id="type" name="type" onchange="handleTypeChange()" required>
@@ -125,19 +206,18 @@
 
         <div class="form-group">
             <label for="tags">Tags</label>
-            <select id="tags" name="tags[]" multiple>
-                <option value="1">Tag 1</option>
-                <option value="2">Tag 2</option>
-                <option value="3">Tag 3</option>
+            <select id="tags" onchange="handleTagSelection(event)">
+                <option value="" disabled selected>Choisissez un tag</option>
+                <?php foreach ($tags as $tag): ?>
+                <option value="<?= $tag['id']; ?>"><?= $tag['nom']; ?></option>
+                <?php endforeach; ?>
             </select>
-        </div>
-
-        <div class="form-group">
-            <label for="ordre">Ordre</label>
-            <input type="number" id="ordre" name="ordre" placeholder="Ordre d'affichage" min="0" required>
+            <div class="tag-container" id="selected-tags"></div>
+            <input type="hidden" id="selected-tags-input" name="selected_tags" value="">
         </div>
 
         <button type="submit" name="add_cours">Créer le Cours</button>
     </form>
+   
 </body>
 </html>

@@ -134,7 +134,7 @@ if (!$currentCategory) {
 
             $categorie = new Categorie($id, $nom, $description, $logo);
             $categorieController->updateCategorie($id, $nom, $description, $logo);
-            header('location: ./dashboard.php');
+            header('location: ./Categorie.php');
             exit;
         }
         ?>

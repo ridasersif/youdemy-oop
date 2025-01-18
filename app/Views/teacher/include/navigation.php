@@ -20,11 +20,11 @@
                 </li>
 
                 <li>
-                    <a href="./Etudiants.php">
+                    <a href="./coures.php">
                         <span class="icon">
                             <ion-icon name="people-outline"></ion-icon>
                         </span>
-                        <span class="title">Etudiants</span>
+                        <span class="title">Course</span>
                     </a>
                 </li>
                 <li>
@@ -36,30 +36,7 @@
                     </a>
                 </li>
 
-                <li >
-                    <a href="./Categorie.php">
-                        <span class="icon">
-                            <ion-icon name="settings-outline"></ion-icon>
-                        </span>
-                       <span class="title">Categorie</span> 
-                    </a>
-                </li>
-                <li>
-                    <a href="./Tags.php">
-                        <span class="icon">
-                            <ion-icon name="lock-closed-outline"></ion-icon>
-                        </span>
-                        <span class="title">Tags</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="./course.php">
-                        <span class="icon">
-                            <ion-icon name="lock-closed-outline"></ion-icon>
-                        </span>
-                        <span class="title">course</span>
-                    </a>
-                </li>
+              
 
                 <li>
                     <a href="../../../index.php">

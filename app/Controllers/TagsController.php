@@ -64,19 +64,21 @@ $tags = $TagsController->getAllTags();
 
 <style>
     .form-add-tag {
-        display: flex;
         align-items: center;
         gap: 15px;
         margin-bottom: 20px;
+        margin: 2%;
     }
 
     .label-add-tag {
         font-size: 14px;
         font-weight: bold;
         color: #333;
+        margin: 10px;
     }
 
     .input-add-tag {
+        margin-top: 4px;
         padding: 8px 12px;
         border: 1px solid #ccc;
         border-radius: 4px;
@@ -92,6 +94,7 @@ $tags = $TagsController->getAllTags();
         color: #fff;
         font-size: 14px;
         cursor: pointer;
+        width: 100%;
     }
 
     .button-add-tag:hover {
@@ -142,6 +145,7 @@ $tags = $TagsController->getAllTags();
         font-size: 13px;
         cursor: pointer;
         margin-left: 5px;
+        margin-bottom: 18px;
     }
 
     .button-update-tag:hover {
@@ -156,6 +160,7 @@ $tags = $TagsController->getAllTags();
         border-radius: 4px;
         font-size: 13px;
         cursor: pointer;
+        margin-bottom: 18px;
     }
 
     .button-delete-tag:hover {

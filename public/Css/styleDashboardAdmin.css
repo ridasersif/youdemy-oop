@@ -164,6 +164,7 @@ body {
 }
 
 .search {
+  margin-top: 24px;
   position: relative;
   width: 400px;
   margin: 0 10px;

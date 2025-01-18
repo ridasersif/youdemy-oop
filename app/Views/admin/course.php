@@ -1,11 +1,15 @@
 <?php 
 session_start();
-if ($_SESSION['user_role'] != 2){
+if ($_SESSION['user_role'] != 1){
     header('location: ../../../index.php');
 }
-require_once '../../../config/Database.php';
-require_once '../../Models/Administrateur.php';
-$admin = new Administrateur();
+require_once __DIR__ . '/../../../config/Database.php';
+require_once __DIR__ . '/../../Controllers/CoursController.php';
+
+$cours=new CourseController();
+$CourseController= new CourseController();
+$CourseController->addCourse();
+$cours=$cours->show();
 
 ?>
 
@@ -27,7 +31,8 @@ $admin = new Administrateur();
     <!-- =============== Navigation ================ -->
     <div class="container">
     </div>
-    <?php include './include/navigation.php' ?>
+    <?php include __DIR__ . '/include/navigation.php'; ?>
+
         <!-- ========================= Main ==================== -->
         <div class="main">
             <div class="topbar">
@@ -49,58 +54,20 @@ $admin = new Administrateur();
            
 
             <!-- ======================= Cards ================== -->
-            <div class="cardBox">
-                <div class="card">
-                    <div>
-                        <div class="numbers">1,504</div>
-                        <div class="cardName">Daily Views</div>
-                    </div>
+        
+          <?php include __DIR__ . '/../teacher/course/tableCours.php';
+ ?>
+         
 
-                    <div class="iconBx">
-                        <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-                </div>
 
-                <div class="card">
-                    <div>
-                        <div class="numbers">80</div>
-                        <div class="cardName">Sales</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="cart-outline"></ion-icon>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div>
-                        <div class="numbers">284</div>
-                        <div class="cardName">Comments</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="chatbubbles-outline"></ion-icon>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div>
-                        <div class="numbers">$7,842</div>
-                        <div class="cardName">Earning</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="cash-outline"></ion-icon>
-                    </div>
-                </div>
-            </div>
-           
+       
             <!-- ================ Order Details List ================= -->
-          
-
 <!-- CSS to style the buttons -->
-
-
+ <style>
+    .btnAddCourse{
+        display: none;
+    }
+ </style>
         </div>
     </div>
 
