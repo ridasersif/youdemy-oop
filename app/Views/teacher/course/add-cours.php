@@ -17,6 +17,71 @@ $categories = $CategorieController->getAllCategories();
     <title>Créer un Cours</title>
 
 
+
+
+</head>
+<body>
+<!-- ../../../Controllers/CoursController.php -->
+    <form action="http://localhost/youdemy-oop/app/Views/teacher/coures.php" method="POST">
+        <h2>Créer un Cours</h2>
+
+        <div class="form-group">
+            <label for="titre">Titre du Cours</label>
+            <input type="text" id="titre" name="titre" placeholder="Entrez le titre du cours" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="4" placeholder="Description du cours" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="categorie">Catégorie</label>
+            <select id="categorie" name="categorie_id" required>
+                <option value="" disabled selected>Choisissez une catégorie</option>
+                <?php foreach ($categories as $category): ?>
+                <option value="<?= $category['id']; ?>"><?= $category['nom']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="titre">image de l'nterface</label>
+            <input type="text" id="image" name="image" placeholder="Entrez image de l'nterface" required>
+        </div>
+        <div class="form-group">
+            <label for="price">Prix</label>
+            <input type="number" id="price" name="price" placeholder="Entrez le prix" required>
+        </div>
+        <div class="form-group">
+            <label for="type">Type</label>
+            <select id="type" name="type" onchange="handleTypeChange()" required>
+                <option value="" disabled selected>Choisissez un type</option>
+                <option value="video">Vidéo</option>
+                <option value="pdf">PDF</option>
+            </select>
+        </div>
+
+        <div id="url-group" class="form-group hidden">
+            <label id="url-label" for="url">URL</label>
+            <input type="url" id="url" name="url" placeholder="Entrez l'URL">
+        </div>
+
+        <div class="form-group">
+            <label for="tags">Tags</label>
+            <select id="tags" onchange="handleTagSelection(event)">
+                <option value="" disabled selected>Choisissez un tag</option>
+                <?php foreach ($tags as $tag): ?>
+                <option value="<?= $tag['id']; ?>"><?= $tag['nom']; ?></option>
+                <?php endforeach; ?>
+            </select>
+            <div class="tag-container" id="selected-tags"></div>
+            <input type="hidden" id="selected-tags-input" name="selected_tags" value="">
+        </div>
+
+        <button type="submit" name="add_cours">Créer le Cours</button>
+    </form>
+
+    
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -156,68 +221,6 @@ $categories = $CategorieController->getAllCategories();
 
 
     </script>
-
-
-</head>
-<body>
-    <form action="../../../Controllers/CoursController.php" method="POST">
-        <h2>Créer un Cours</h2>
-
-        <div class="form-group">
-            <label for="titre">Titre du Cours</label>
-            <input type="text" id="titre" name="titre" placeholder="Entrez le titre du cours" required>
-        </div>
-
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea id="description" name="description" rows="4" placeholder="Description du cours" required></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="categorie">Catégorie</label>
-            <select id="categorie" name="categorie_id" required>
-                <option value="" disabled selected>Choisissez une catégorie</option>
-                <?php foreach ($categories as $category): ?>
-                <option value="<?= $category['id']; ?>"><?= $category['nom']; ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="titre">image de l'nterface</label>
-            <input type="text" id="image" name="image" placeholder="Entrez image de l'nterface" required>
-        </div>
-        <div class="form-group">
-            <label for="price">Prix</label>
-            <input type="number" id="price" name="price" placeholder="Entrez le prix" required>
-        </div>
-        <div class="form-group">
-            <label for="type">Type</label>
-            <select id="type" name="type" onchange="handleTypeChange()" required>
-                <option value="" disabled selected>Choisissez un type</option>
-                <option value="video">Vidéo</option>
-                <option value="pdf">PDF</option>
-            </select>
-        </div>
-
-        <div id="url-group" class="form-group hidden">
-            <label id="url-label" for="url">URL</label>
-            <input type="url" id="url" name="url" placeholder="Entrez l'URL">
-        </div>
-
-        <div class="form-group">
-            <label for="tags">Tags</label>
-            <select id="tags" onchange="handleTagSelection(event)">
-                <option value="" disabled selected>Choisissez un tag</option>
-                <?php foreach ($tags as $tag): ?>
-                <option value="<?= $tag['id']; ?>"><?= $tag['nom']; ?></option>
-                <?php endforeach; ?>
-            </select>
-            <div class="tag-container" id="selected-tags"></div>
-            <input type="hidden" id="selected-tags-input" name="selected_tags" value="">
-        </div>
-
-        <button type="submit" name="add_cours">Créer le Cours</button>
-    </form>
    
 </body>
 </html>

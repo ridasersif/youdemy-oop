@@ -1,10 +1,7 @@
 <?php
-session_start();
+
 require_once realpath(__DIR__ . '/../../') . '\app\Models\PdfCourse.php';
 require_once realpath(__DIR__ . '/../../') . '\app\Models\VideoCourse.php';
-
-
-        
 
 class CourseController{
     public function addCourse(){
@@ -33,12 +30,13 @@ class CourseController{
             
 
             if ($cours && $cours->create()) {
-                header("Location: ../Views/teacher/course/add-cours.php?status=success");
+                header("location: ./course/add-cours.php");
+                // header("Location: ../Views/teacher/course/add-cours.php");
                 exit();
                
             } else {
-                echo "dfghjkl";
-                header("Location: ../Views/teacher/course/add-cours.php?status=error");
+                echo "error";
+                // header("Location: ../Views/teacher/course/add-cours.php");
                 exit();
             }
            

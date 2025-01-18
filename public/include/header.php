@@ -1,4 +1,4 @@
-<?php session_start() ?>
+
 <head>
 		<!--  *****   Link To Custom CSS Style Sheet   *****  -->
 		<link rel="stylesheet" type="text/css" href="public/Css/style.css?v=1.17">

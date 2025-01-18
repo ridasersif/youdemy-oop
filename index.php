@@ -1,3 +1,14 @@
+<?php 
+session_start();
+// if ($_SESSION['user_role'] != 2){
+//     header('location: ../../../index.php');
+// }
+require_once './config/Database.php';
+require './app/Controllers/CoursController.php';
+$cours=new CourseController();
+$cours->addCourse();
+$cours=$cours->show();
+?>
 <!DOCTYPE html>
 
 <html>

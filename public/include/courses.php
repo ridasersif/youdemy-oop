@@ -1,3 +1,4 @@
+<?php print_r($cours) ?>
 <section class="courses" id="courses">
 				<!--   *** Courses Header Starts ***   -->
 				<header class="section-header">
