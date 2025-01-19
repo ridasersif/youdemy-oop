@@ -13,7 +13,6 @@ class PdfCourse extends Course {
         $this->createur_id = $createur_id ?? $_SESSION['user_id'];
     }
 
-
     public function create() {
         $db = new Database();
         $conn = $db->connect();
@@ -92,30 +91,91 @@ class PdfCourse extends Course {
         return true;
     }
 
-    public function show() {
+    public function show($currentPage = 1, $itemsPerPage = 6) {
         $db = new Database();
         $conn = $db->connect();
-        
+    
+        $offset = ($currentPage - 1) * $itemsPerPage;
+    
         $query = "
-         SELECT 
-    Cours.id,Cours.titre,Cours.price, Cours.description,Cours.url,Categorie.nom as Categorie_nom ,cours.phto_interface,cours.estPublie ,categorie.id as idCategorie,utilisateur.nom as createur,
-    GROUP_CONCAT(Tag.nom SEPARATOR ', ') AS tags
-FROM 
-    Cours
-JOIN Categorie ON Cours.categorie_id = Categorie.id
-JOIN utilisateur ON utilisateur.id = Cours.createur_id
- JOIN Cours_Tags ON Cours.id = Cours_Tags.cours_id
-JOIN Tag ON Cours_Tags.tag_id = Tag.id
-GROUP BY 
-    Cours.id; "
-        ;
+            SELECT 
+                Cours.id,Cours.type, Cours.titre, Cours.price, Cours.description, Cours.url, 
+                Categorie.nom as Categorie_nom, Cours.phto_interface, Cours.estPublie,
+                Categorie.id as idCategorie, utilisateur.nom as createur,
+                GROUP_CONCAT(Tag.nom SEPARATOR ', ') AS tags
+            FROM 
+                Cours
+            JOIN Categorie ON Cours.categorie_id = Categorie.id
+            JOIN utilisateur ON utilisateur.id = Cours.createur_id
+            JOIN Cours_Tags ON Cours.id = Cours_Tags.cours_id
+            JOIN Tag ON Cours_Tags.tag_id = Tag.id
+            GROUP BY 
+                Cours.id
+            LIMIT :itemsPerPage OFFSET :offset
+        ";
     
         $stmt = $conn->prepare($query);
+        $stmt->bindParam(':itemsPerPage', $itemsPerPage, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
-        
+    
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
-}
+    public function getTotalItems() {
+        $db = new Database();
+        $conn = $db->connect();
+    
+        $query = "SELECT COUNT(*) as total FROM Cours";
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+    
+        return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+    }
+    public function showContone() {
+        $db = new Database();
+        $conn = $db->connect();
+        $query = "
+        SELECT 
+            Cours.id, Cours.type, Cours.titre, Cours.price, Cours.description, Cours.url, 
+            Categorie.nom as Categorie_nom, Cours.phto_interface, Cours.estPublie,
+            Categorie.id as idCategorie, utilisateur.nom as createur,
+            GROUP_CONCAT(Tag.nom SEPARATOR ', ') AS tags
+        FROM 
+            Cours
+        JOIN Categorie ON Cours.categorie_id = Categorie.id
+        JOIN utilisateur ON utilisateur.id = Cours.createur_id
+        JOIN Cours_Tags ON Cours.id = Cours_Tags.cours_id
+        JOIN Tag ON Cours_Tags.tag_id = Tag.id
+        WHERE  Cours.id = :id
+        GROUP BY 
+            Cours.id
+       
+    ";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':id', $this->id);
+    $stmt->execute();
+     $course=$stmt->fetch(PDO::FETCH_ASSOC);
+
+    echo '
+                <div class="Pdf">
+                <iframe class="iframePdf" src="' . htmlspecialchars($course["url"]) . '"></iframe>
+                </div>
+    ';
+    } 
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 ?>

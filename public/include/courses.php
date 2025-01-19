@@ -1,4 +1,14 @@
-<?php print_r($cours) ?>
+<?php
+$currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$itemsPerPage = 6;
+
+$pdfCourse = new PdfCourse();
+
+$cours = $pdfCourse->show($currentPage, $itemsPerPage);
+
+$totalItems = $pdfCourse->getTotalItems();
+$totalPages = ceil($totalItems / $itemsPerPage);
+?>
 <section class="courses" id="courses">
 				<!--   *** Courses Header Starts ***   -->
 				<header class="section-header">
@@ -11,109 +21,56 @@
 				<!--   *** Courses Header Ends ***   -->
 				<!--   *** Courses Contents Starts ***   -->
 				<div class="course-contents">
-					
+
+				<?php foreach($cours as $cour): ?>
 					<div class="course-card">
-						<img alt="" src="public/images/course-1.jpg">
+						<img alt="" src="<?php echo $cour['phto_interface'] ?>">
 						<div class="category">
-							<div class="subject"><h3>Design</h3></div>
-							<img alt="" src="public/images/teacher-1.jpg">
+							<div class="subject"><h3><?php echo $cour['Categorie_nom']?></h3></div>
+							<img alt="" src="<?php echo $cour['phto_interface'] ?>">
 						</div>
-						<h2 class="course-title">Learn Figma: This is some dummy text demonistrating the title</h2>
+						<h2 class="course-title"><?php echo $cour['description'] ?></h2>
 						<div class="course-desc">
 							<span><i class="fa-solid fa-video"></i> 45 Videos</span>
 							<span><i class="fa-solid fa-users"></i> 2154+ Students</span>
 						</div>
 						<div class="course-ratings">
 							<span>4.9 <i class="fa-solid fa-star"></i></span>
-							<span><b>$</b>120.00</span>
+							<span><b>165 DH</b><?php echo $cour['price'] ?></span>
 						</div>
 					</div>
-
-					<div class="course-card">
-						<img alt="" src="public/images/course-1.jpg">
-						<div class="category">
-							<div class="subject"><h3>Design</h3></div>
-							<img alt="" src="public/images/teacher-1.jpg">
-						</div>
-						<h2 class="course-title">Learn Figma: This is some dummy text demonistrating the title</h2>
-						<div class="course-desc">
-							<span><i class="fa-solid fa-video"></i> 45 Videos</span>
-							<span><i class="fa-solid fa-users"></i> 2154+ Students</span>
-						</div>
-						<div class="course-ratings">
-							<span>4.9 <i class="fa-solid fa-star"></i></span>
-							<span><b>$</b>120.00</span>
-						</div>
-					</div>
-
-					<div class="course-card">
-						<img alt="" src="public/images/course-1.jpg">
-						<div class="category">
-							<div class="subject"><h3>Design</h3></div>
-							<img alt="" src="public/images/teacher-1.jpg">
-						</div>
-						<h2 class="course-title">Learn Figma: This is some dummy text demonistrating the title</h2>
-						<div class="course-desc">
-							<span><i class="fa-solid fa-video"></i> 45 Videos</span>
-							<span><i class="fa-solid fa-users"></i> 2154+ Students</span>
-						</div>
-						<div class="course-ratings">
-							<span>4.9 <i class="fa-solid fa-star"></i></span>
-							<span><b>$</b>120.00</span>
-						</div>
-					</div>
-
-					<div class="course-card">
-						<img alt="" src="public/images/course-1.jpg">
-						<div class="category">
-							<div class="subject"><h3>Development</h3></div>
-							<img alt="" src="public/images/teacher-1.jpg">
-						</div>
-						<h2 class="course-title">Learn JavaScript: This is some dummy text demonistrating the title</h2>
-						<div class="course-desc">
-							<span><i class="fa-solid fa-video"></i> 45 Videos</span>
-							<span><i class="fa-solid fa-users"></i> 2154+ Students</span>
-						</div>
-						<div class="course-ratings">
-							<span>4.9 <i class="fa-solid fa-star"></i></span>
-							<span><b>$</b>120.00</span>
-						</div>
-					</div>
-
-					<div class="course-card">
-						<img alt="" src="public/images/course-1.jpg">
-						<div class="category">
-							<div class="subject"><h3>Development</h3></div>
-							<img alt="" src="public/images/teacher-1.jpg">
-						</div>
-						<h2 class="course-title">Learn JavaScript: This is some dummy text demonistrating the title</h2>
-						<div class="course-desc">
-							<span><i class="fa-solid fa-video"></i> 45 Videos</span>
-							<span><i class="fa-solid fa-users"></i> 2154+ Students</span>
-						</div>
-						<div class="course-ratings">
-							<span>4.9 <i class="fa-solid fa-star"></i></span>
-							<span><b>$</b>120.00</span>
-						</div>
-					</div>
-
-					<div class="course-card">
-						<img alt="" src="public/images/course-1.jpg">
-						<div class="category">
-							<div class="subject"><h3>Development</h3></div>
-							<img alt="" src="public/images/teacher-1.jpg">
-						</div>
-						<h2 class="course-title">Learn JQuery: This is some dummy text demonistrating the title</h2>
-						<div class="course-desc">
-							<span><i class="fa-solid fa-video"></i> 45 Videos</span>
-							<span><i class="fa-solid fa-users"></i> 2154+ Students</span>
-						</div>
-						<div class="course-ratings">
-							<span>4.9 <i class="fa-solid fa-star"></i></span>
-							<span><b>$</b>120.00</span>
-						</div>
-					</div>
-
+					<?php endforeach ?>
 				</div>
+				<!-- Pagination -->
+<div class="pagination">
+    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+        <a href="?page=<?php echo $i; ?>" class="page-link <?php echo $i == $currentPage ? 'active' : ''; ?>">
+            <?php echo $i; ?>
+        </a>
+    <?php endfor; ?>
+</div>
+
+<style>
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        gap: 10px;
+    }
+
+    .page-link {
+        padding: 10px 15px;
+        text-decoration: none;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        color: #007bff;
+    }
+
+    .page-link.active {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff;
+    }
+</style>
 				<!--   *** Courses Contents Ends ***   -->
 			</section>

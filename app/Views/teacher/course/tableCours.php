@@ -1,12 +1,22 @@
-
 <a class="btnAddCourse" href="./course/add-cours.php"><button>Ajoute un cours</button></a>
-          <div class="horizontal-container">
-            <div class="horizontal-scroll">
-                <?php
-               
-                 foreach($cours as $cour): ?>
+<?php
+$currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$itemsPerPage = 5;
+
+$pdfCourse = new PdfCourse();
+
+$cours = $pdfCourse->show($currentPage, $itemsPerPage);
+
+$totalItems = $pdfCourse->getTotalItems();
+$totalPages = ceil($totalItems / $itemsPerPage);
+?>
+
+<div class="horizontal-container">
+<div class="horizontal-scroll">
+                <?php foreach($cours as $cour): ?>
+                    
                 <div class="card">
-                    <a href="">
+                    <a href="http://localhost/youdemy-oop/app/Views/showours.php?id=<?php echo $cour['id']; ?>&type=<?php echo $cour['type']?>">
                     <img src="<?php echo $cour['phto_interface'] ?>" alt="<?php echo $cour['titre'] ?>" class="card-image">
                     </a> 
                     <div class="card-content">
@@ -35,12 +45,45 @@
 
                         <?php } ?> 
                        <?php } ?>
-                       <a href="">Delete</a>
+                       <a href="http://localhost/youdemy-oop/app/Views/teacher/course/deleteCourse.php?id=<?php echo $cour['id']; ?>">Delete</a>
                     </div>
                 </div>
                 <?php endforeach ?>
-             </div>
-         </div>
+            </div>
+</div>
+
+<!-- Pagination -->
+<div class="pagination">
+    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+        <a href="?page=<?php echo $i; ?>" class="page-link <?php echo $i == $currentPage ? 'active' : ''; ?>">
+            <?php echo $i; ?>
+        </a>
+    <?php endfor; ?>
+</div>
+
+<style>
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        gap: 10px;
+    }
+
+    .page-link {
+        padding: 10px 15px;
+        text-decoration: none;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        color: #007bff;
+    }
+
+    .page-link.active {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff;
+    }
+</style>
+
  <style>
         /* Conteneur principal pour centrer le contenu */
         .horizontal-container {

@@ -46,6 +46,9 @@ class CourseController{
         $cours = new PdfCourse();
        return $cours->show();
     }
+    public function deleteCours(){
+        
+    }
 
 }
 $CourseController= new CourseController();

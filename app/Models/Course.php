@@ -112,5 +112,7 @@ abstract class Course {
     abstract public function delete();
 
     abstract public function show();
+
+    abstract public function showContone();
 }
 ?>
