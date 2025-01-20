@@ -6,11 +6,11 @@ require_once 'Course.php';
 class PdfCourse extends Course {
     private $tag_ids;
     protected $createur_id;
-
+    public $id;
     public function __construct($titre = "", $description = "", $categorie_id = null, $createur_id = null, $type = "pdf", $url = "", $phto_interface = null, $tag_ids = [],) {
         parent::__construct($titre, $description, $categorie_id, $createur_id, $type, $url, $phto_interface);
         $this->tag_ids = $tag_ids; 
-        $this->createur_id = $createur_id ?? $_SESSION['user_id'];
+        $this->createur_id = $createur_id ;
     }
 
     public function create() {
@@ -45,10 +45,11 @@ class PdfCourse extends Course {
 
     
     public function update() {
+
         $db = new Database();
         $conn = $db->connect();
         $query = "UPDATE Cours SET titre = :titre, description = :description, categorie_id = :categorie_id,
-                  type = :type, url = :url, puto_interface = :puto_interface
+                  url = :url, phto_interface = :phto_interface
                   WHERE id = :id";
 
         $stmt = $conn->prepare($query);
@@ -56,9 +57,12 @@ class PdfCourse extends Course {
         $stmt->bindParam(':titre', $this->titre);
         $stmt->bindParam(':description', $this->description);
         $stmt->bindParam(':categorie_id', $this->categorie_id);
-        $stmt->bindParam(':type', $this->type);
         $stmt->bindParam(':url', $this->url);
-        $stmt->bindParam(':phto_interface', $this->phto_interface);
+         if (is_array($this->phto_interface)) {
+         $this->phto_interface = implode(',', $this->phto_interface); 
+         }
+         $stmt->bindParam(':phto_interface', $this->phto_interface);
+
        
         $stmt->execute();
 
@@ -78,12 +82,29 @@ class PdfCourse extends Course {
 
         return true;
     }
+    public function find() {
+        $db = new Database();
+        $conn = $db->connect();
+        $sql = "SELECT Cours.*, GROUP_CONCAT(cours_tags.tag_id) AS tag_ids
+                FROM Cours 
+                LEFT JOIN cours_tags ON Cours.id = cours_tags.cours_id
+                 WHERE Cours.id = :id
+                GROUP BY Cours.id
+               ";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
+    
+    
 
 
     public function delete() {
         $db = new Database();
         $conn = $db->connect();
-        $query = "UPDATE Cours SET deleted_at = NOW() WHERE id = :id";
+        $query = "DELETE FROM Cours WHERE id = :id";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':id', $this->id);
         $stmt->execute();

@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $userId = intval($_POST['userId']);
     $action = $_POST['action'];
+    $table = $_POST['table'];
 
         if ($action === 'activate') {
             $admin->updateUserStatus($userId, true);
@@ -15,8 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif ($action === 'delete') {
             $admin->deleteUser($userId);
         }
-
-    header('Location: ../Views/admin/dashboard.php'); 
-    exit();
+    if($table === 'etudiants'){
+        header('Location: ../Views/admin/Etudiants.php'); 
+        exit();
+    }else{
+        header('Location: ../Views/admin/Ensignants.php');
+    }
+   
 }
 ?>

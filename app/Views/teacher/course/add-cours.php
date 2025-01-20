@@ -1,4 +1,8 @@
 <?php
+session_start();
+if ($_SESSION['user_role'] != 2){
+    header('location: ../../../../index.php');
+}
 
 require_once '../../../Controllers/TagsController.php';
 require_once '../../../Controllers/CategorieController.php';
@@ -23,6 +27,8 @@ $categories = $CategorieController->getAllCategories();
 <body>
 <!-- ../../../Controllers/CoursController.php -->
     <form action="http://localhost/youdemy-oop/app/Views/teacher/coures.php" method="POST">
+        <a href="http://localhost/youdemy-oop/app/Views/teacher/coures.php" style="  text-decoration: none;
+            color: red;">X</a>
         <h2>Créer un Cours</h2>
 
         <div class="form-group">
@@ -87,6 +93,7 @@ $categories = $CategorieController->getAllCategories();
             font-family: Arial, sans-serif;
             margin: 20px;
             background-color: #f5f5f5;
+          
         }
         form {
             background-color: #fff;

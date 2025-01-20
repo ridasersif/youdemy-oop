@@ -8,6 +8,7 @@ $cours = $pdfCourse->show($currentPage, $itemsPerPage);
 
 $totalItems = $pdfCourse->getTotalItems();
 $totalPages = ceil($totalItems / $itemsPerPage);
+
 ?>
 <section class="courses" id="courses">
 				<!--   *** Courses Header Starts ***   -->
@@ -24,14 +25,31 @@ $totalPages = ceil($totalItems / $itemsPerPage);
 
 				<?php foreach($cours as $cour): ?>
 					<div class="course-card">
+
 						<img alt="" src="<?php echo $cour['phto_interface'] ?>">
+
 						<div class="category">
 							<div class="subject"><h3><?php echo $cour['Categorie_nom']?></h3></div>
 							<img alt="" src="<?php echo $cour['phto_interface'] ?>">
 						</div>
 						<h2 class="course-title"><?php echo $cour['description'] ?></h2>
 						<div class="course-desc">
-							<span><i class="fa-solid fa-video"></i> 45 Videos</span>
+						<?php if (isset($_SESSION['user_id'])){ ?>
+
+							<?php if($_SESSION['user_role'] != 2 || $_SESSION['user_role'] !=3){?>
+								<?php if($_SESSION['user_role'] == 3){ ?>
+									
+                                
+									<a href="http://localhost/youdemy-oop/app/Controllers/InscriptionController.php?cours_id=<?php echo $cour['id']; ?>&student_id=<?php echo $_SESSION['user_id']; ?>">
+										<span><i class="fa-solid fa-user-plus"></i> S'inscrire au cours</span>
+									</a>
+
+
+								 <?php } ?>
+							<?php } ?>
+						<?php }else{ ?>
+							<a href="http://localhost/youdemy-oop/app/Views/auth/register.php"><span><i class="fa-solid fa-user-plus"></i> s'inscrire </span></a>
+							<?php } ?>
 							<span><i class="fa-solid fa-users"></i> 2154+ Students</span>
 						</div>
 						<div class="course-ratings">

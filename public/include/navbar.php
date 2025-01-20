@@ -15,12 +15,15 @@
                 echo '<li><a href="';
                 echo ($_SESSION['user_role'] == 1) ? 'app/Views/admin/dashboard.php' : 'app/Views/teacher/dashboard.php';
                 echo '">Dashboard</a></li>';
+            }else {
+                echo ' <li><a href="http://localhost/youdemy-oop/app/Views/student/my-courses.php">Mes Cours</a></li>';
             }
             ?>
         <?php endif; ?>
 
     </ul>
     <div class="menu-btn">
+       
         <span></span>
     </div>
     <div>

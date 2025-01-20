@@ -34,7 +34,7 @@ $totalPages = ceil($totalItems / $itemsPerPage);
                         ?> </p>
                         <p class="price">Prix : <?php echo $cour['price'] ?> DH</p>
                        
-                        <a href="">Updet</a>
+                        <a href="http://localhost/youdemy-oop/app/Views/teacher/course/updetCours.php?id=<?php echo $cour['id']; ?> ">Updet</a>
                        <?php  }else {?>
                         <?php if ($cour['estPublie']!=0){?>
                             <a href="../../Models/StatusCours.php?action=Dpublie&id=<?php echo $cour['id']; ?>">DPublie</a>
@@ -45,7 +45,7 @@ $totalPages = ceil($totalItems / $itemsPerPage);
 
                         <?php } ?> 
                        <?php } ?>
-                       <a href="http://localhost/youdemy-oop/app/Views/teacher/course/deleteCourse.php?id=<?php echo $cour['id']; ?>">Delete</a>
+                       <a name="delete" href="http://localhost/youdemy-oop/app/Views/teacher/course/deleteCourse.php?id=<?php echo $cour['id']; ?>&type=<?php echo $cour['type']?>">Delete</a>
                     </div>
                 </div>
                 <?php endforeach ?>

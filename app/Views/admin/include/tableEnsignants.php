@@ -28,6 +28,7 @@
                             <form action="../../Controllers/AdminController.php" method="POST" style="display: inline;">
                                 <input type="hidden" name="userId" value="<?= $user['id'] ?>">
                                 <input type="hidden" name="action" value="<?= $user['estActif'] ? 'deactivate' : 'activate' ?>">
+                                
                                 <button type="submit" class="action-btn <?= $user['estActif'] ? 'deactivate' : 'activate' ?>">
                                     <?= $user['estActif'] ? 'Désactiver' : 'Activer' ?>
                                 </button>

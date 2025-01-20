@@ -6,6 +6,7 @@ require_once 'Course.php';
 class VideoCourse extends Course {
     private $tag_ids;
     protected $createur_id;
+    public $id;
 
     public function __construct($titre = "", $description = "", $categorie_id = null, $createur_id = null, $type = "video", $url = "", $phto_interface = null, $tag_ids = [],) {
         parent::__construct($titre, $description, $categorie_id, $createur_id, $type, $url, $phto_interface);
@@ -83,7 +84,7 @@ class VideoCourse extends Course {
     public function delete() {
         $db = new Database();
         $conn = $db->connect();
-        $query = "UPDATE Cours SET deleted_at = NOW() WHERE id = :id";
+        $query = "DELETE FROM Cours WHERE id = :id";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':id', $this->id);
         $stmt->execute();
